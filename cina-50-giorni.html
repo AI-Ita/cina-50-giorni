@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Cina in 50 Giorni — Cinese da Sopravvivenza</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Spectral:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Ma+Shan+Zheng&family=Noto+Serif+SC:wght@400;600;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#F2E7D5;
+  --paper-2:#F8F0E2;
+  --card:#FBF5EA;
+  --ink:#221C16;
+  --ink-2:#5A4F44;
+  --ink-3:#8A7B68;
+  --red:#B0301F;
+  --red-deep:#8E2417;
+  --jade:#3E6E5C;
+  --gold:#A57E36;
+  --line:#D8C5A6;
+  --line-2:#E8DBC4;
+  --shadow:rgba(60,40,20,.16);
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;padding:0}
+body{
+  background:var(--paper);
+  color:var(--ink);
+  font-family:"Spectral",Georgia,serif;
+  font-size:17px;line-height:1.55;
+  min-height:100vh;
+  overflow-x:hidden;
+  position:relative;
+}
+/* grain + atmosphere */
+body::before{
+  content:"";position:fixed;inset:0;z-index:0;pointer-events:none;
+  background:
+    radial-gradient(120% 80% at 80% -10%, rgba(176,48,31,.07), transparent 55%),
+    radial-gradient(100% 70% at -10% 110%, rgba(62,110,92,.06), transparent 55%);
+}
+body::after{
+  content:"";position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.05;mix-blend-mode:multiply;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+.wrap{position:relative;z-index:1;max-width:680px;margin:0 auto;padding:0 18px 120px}
+
+/* masthead */
+header{padding:26px 0 14px;text-align:center}
+.kicker{font-family:"Fraunces";font-weight:600;letter-spacing:.42em;font-size:11px;text-transform:uppercase;color:var(--red);margin:0 0 10px}
+.cn-title{font-family:"Ma Shan Zheng";font-size:46px;line-height:1;color:var(--ink);margin:0;letter-spacing:.05em}
+.sub{font-family:"Fraunces";font-style:italic;font-weight:400;color:var(--ink-2);font-size:15px;margin:8px 0 0}
+.rule{height:1px;background:linear-gradient(90deg,transparent,var(--line),transparent);margin:18px 0 0}
+
+/* top stats bar */
+.bar{display:flex;align-items:center;gap:12px;margin:16px 0 8px}
+.prog-wrap{flex:1}
+.prog-meta{display:flex;justify-content:space-between;font-family:"Fraunces";font-size:12px;color:var(--ink-3);letter-spacing:.04em;margin-bottom:6px}
+.prog-meta b{color:var(--ink-2);font-weight:600}
+.prog-track{height:7px;border-radius:99px;background:var(--line-2);overflow:hidden;border:1px solid var(--line)}
+.prog-fill{height:100%;background:linear-gradient(90deg,var(--red),var(--red-deep));border-radius:99px;width:0;transition:width .5s cubic-bezier(.4,0,.2,1)}
+.streak{display:flex;flex-direction:column;align-items:center;min-width:54px;padding:6px 8px;border:1px solid var(--line);border-radius:12px;background:var(--card)}
+.streak .num{font-family:"Fraunces";font-weight:700;font-size:20px;line-height:1;color:var(--red)}
+.streak .lbl{font-family:"Fraunces";font-size:9px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3);margin-top:3px}
+.menu-btn{width:44px;height:44px;border:1px solid var(--line);border-radius:12px;background:var(--card);display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;transition:.2s}
+.menu-btn:active{transform:scale(.94)}
+.menu-btn svg{width:20px;height:20px;stroke:var(--ink-2)}
+
+/* day navigator */
+.nav{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:10px 0 4px}
+.nav-arrow{width:46px;height:46px;border-radius:50%;border:1px solid var(--line);background:var(--card);display:flex;align-items:center;justify-content:center;cursor:pointer;transition:.18s;color:var(--ink-2)}
+.nav-arrow:hover{border-color:var(--red);color:var(--red)}
+.nav-arrow:active{transform:scale(.92)}
+.nav-arrow:disabled{opacity:.3;cursor:default;border-color:var(--line)}
+.nav-arrow svg{width:22px;height:22px}
+.nav-center{text-align:center;flex:1}
+.today-btn{font-family:"Fraunces";font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--red);border:none;background:none;cursor:pointer;padding:4px 8px;border-radius:8px}
+.today-btn:hover{background:rgba(176,48,31,.08)}
+
+/* lesson card */
+.card{
+  background:var(--card);
+  border:1px solid var(--line);
+  border-radius:20px;
+  padding:30px 24px 26px;
+  position:relative;
+  box-shadow:0 14px 40px -22px var(--shadow);
+  overflow:hidden;
+  animation:rise .45s cubic-bezier(.2,.7,.3,1);
+}
+@keyframes rise{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+.card-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:6px}
+.cat{font-family:"Fraunces";font-size:11px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-3)}
+/* seal */
+.seal{
+  width:58px;height:58px;flex-shrink:0;border-radius:11px;
+  background:var(--red);color:var(--paper-2);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  box-shadow:0 4px 0 var(--red-deep), 0 8px 18px -6px rgba(142,36,23,.5);
+  transform:rotate(-3deg);
+  border:2px solid rgba(255,255,255,.18);
+}
+.seal .s-cn{font-family:"Ma Shan Zheng";font-size:15px;line-height:1;opacity:.9;margin-bottom:1px}
+.seal .s-n{font-family:"Fraunces";font-weight:700;font-size:24px;line-height:.9}
+.done-tag{display:inline-flex;align-items:center;gap:5px;font-family:"Fraunces";font-size:11px;letter-spacing:.06em;color:var(--jade);margin-top:6px}
+.done-tag svg{width:13px;height:13px}
+
+.hanzi{font-family:"Noto Serif SC","Songti SC",serif;font-weight:900;color:var(--ink);line-height:1.12;margin:14px 0 4px;text-align:center;cursor:pointer;letter-spacing:.02em}
+.pinyin{font-family:"Fraunces";font-weight:600;color:var(--red);text-align:center;font-size:24px;letter-spacing:.02em;margin:2px 0}
+.meaning{text-align:center;font-size:20px;color:var(--ink);margin:6px 0 2px;font-weight:500}
+.meaning .lit{display:block;font-style:italic;font-size:14px;color:var(--ink-3);margin-top:3px;font-weight:400}
+
+.say{display:flex;justify-content:center;margin:16px 0 4px}
+.say-btn{display:inline-flex;align-items:center;gap:8px;font-family:"Fraunces";font-weight:600;font-size:14px;letter-spacing:.03em;color:var(--paper-2);background:var(--ink);border:none;padding:10px 20px;border-radius:99px;cursor:pointer;transition:.18s}
+.say-btn:hover{background:var(--red)}
+.say-btn:active{transform:scale(.95)}
+.say-btn svg{width:17px;height:17px}
+.say-btn.playing{background:var(--red);animation:pulse 1s infinite}
+@keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(176,48,31,.4)}50%{box-shadow:0 0 0 8px rgba(176,48,31,0)}}
+
+.divider{display:flex;align-items:center;gap:12px;margin:24px 0 16px;color:var(--gold)}
+.divider .l{flex:1;height:1px;background:var(--line)}
+.divider .d{font-family:"Ma Shan Zheng";font-size:16px;color:var(--gold)}
+
+/* trick box */
+.trick{background:linear-gradient(180deg,rgba(165,126,54,.09),rgba(165,126,54,.04));border:1px solid rgba(165,126,54,.35);border-radius:15px;padding:16px 18px;position:relative}
+.trick-h{display:flex;align-items:center;gap:8px;font-family:"Fraunces";font-weight:700;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);margin-bottom:8px}
+.trick-h svg{width:16px;height:16px}
+.trick p{margin:0;color:var(--ink);font-size:16px;line-height:1.55}
+.trick b{color:var(--red-deep);font-weight:600}
+
+/* example */
+.ex{margin-top:16px;border-left:3px solid var(--red);padding:4px 0 4px 14px}
+.ex-h{font-family:"Fraunces";font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-3);margin-bottom:6px;display:flex;align-items:center;gap:8px}
+.ex-cn{font-family:"Noto Serif SC",serif;font-weight:600;font-size:22px;color:var(--ink);cursor:pointer}
+.ex-py{font-family:"Fraunces";font-style:italic;color:var(--red);font-size:15px;margin-top:2px}
+.ex-it{color:var(--ink-2);font-size:15px;margin-top:2px}
+.mini-say{vertical-align:middle;border:none;background:none;cursor:pointer;color:var(--ink-3);padding:2px;border-radius:6px}
+.mini-say:hover{color:var(--red)}
+.mini-say svg{width:15px;height:15px}
+
+/* note */
+.note{margin-top:16px;background:rgba(62,110,92,.08);border:1px dashed rgba(62,110,92,.4);border-radius:13px;padding:13px 16px;font-size:14.5px;color:var(--ink-2);display:flex;gap:10px}
+.note svg{width:18px;height:18px;flex-shrink:0;stroke:var(--jade);margin-top:2px}
+.note b{color:var(--jade)}
+
+/* complete button */
+.complete{width:100%;margin-top:22px;padding:15px;border-radius:14px;border:1.5px solid var(--jade);background:transparent;color:var(--jade);font-family:"Fraunces";font-weight:600;font-size:15px;letter-spacing:.04em;cursor:pointer;transition:.2s;display:flex;align-items:center;justify-content:center;gap:9px}
+.complete svg{width:19px;height:19px}
+.complete:hover{background:rgba(62,110,92,.07)}
+.complete:active{transform:scale(.98)}
+.complete.done{background:var(--jade);color:var(--paper-2);border-color:var(--jade)}
+
+/* reveal mode */
+.blurred{filter:blur(9px);opacity:.55;user-select:none}
+.reveal-hint{text-align:center;font-family:"Fraunces";font-style:italic;font-size:13px;color:var(--ink-3);margin-top:10px}
+
+/* panel */
+.scrim{position:fixed;inset:0;background:rgba(40,28,16,.5);backdrop-filter:blur(2px);z-index:40;opacity:0;pointer-events:none;transition:.28s}
+.scrim.open{opacity:1;pointer-events:auto}
+.panel{position:fixed;left:0;right:0;bottom:0;z-index:41;background:var(--paper-2);border-radius:24px 24px 0 0;max-height:86vh;overflow-y:auto;transform:translateY(100%);transition:transform .34s cubic-bezier(.2,.8,.2,1);box-shadow:0 -20px 50px -20px rgba(40,28,16,.5);max-width:680px;margin:0 auto}
+.panel.open{transform:translateY(0)}
+.panel-grab{width:44px;height:5px;border-radius:99px;background:var(--line);margin:12px auto 4px}
+.panel-inner{padding:8px 22px 40px}
+.panel h3{font-family:"Fraunces";font-weight:600;font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:var(--red);margin:24px 0 12px;display:flex;align-items:center;gap:8px}
+.panel h3:first-child{margin-top:8px}
+
+/* settings */
+.field{margin-bottom:14px}
+.field label{display:block;font-family:"Fraunces";font-size:13px;color:var(--ink-2);margin-bottom:6px;font-weight:500}
+.field input,.field select{width:100%;padding:11px 13px;border:1px solid var(--line);border-radius:11px;background:var(--card);color:var(--ink);font-family:"Spectral",serif;font-size:16px}
+.field input:focus,.field select:focus{outline:none;border-color:var(--red)}
+.btn-ics{width:100%;padding:14px;border-radius:13px;border:none;background:var(--red);color:var(--paper-2);font-family:"Fraunces";font-weight:600;font-size:15px;letter-spacing:.03em;cursor:pointer;transition:.2s;display:flex;align-items:center;justify-content:center;gap:9px;margin-top:6px}
+.btn-ics:hover{background:var(--red-deep)}
+.btn-ics:active{transform:scale(.98)}
+.btn-ics svg{width:18px;height:18px}
+.hint{font-size:13px;color:var(--ink-3);font-style:italic;margin:9px 2px 0;line-height:1.5}
+
+/* index grid */
+.idx{display:grid;grid-template-columns:repeat(auto-fill,minmax(58px,1fr));gap:8px}
+.idx-cell{aspect-ratio:1;border:1px solid var(--line);border-radius:11px;background:var(--card);display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;transition:.15s;position:relative;padding:2px}
+.idx-cell:hover{border-color:var(--red);transform:translateY(-2px)}
+.idx-cell .n{font-family:"Fraunces";font-weight:700;font-size:16px;color:var(--ink-2)}
+.idx-cell .cc{font-family:"Noto Serif SC",serif;font-size:13px;color:var(--ink-3);line-height:1;margin-top:2px;max-width:100%;overflow:hidden;white-space:nowrap}
+.idx-cell.cur{border-color:var(--red);border-width:2px;background:rgba(176,48,31,.06)}
+.idx-cell.done{background:var(--jade);border-color:var(--jade)}
+.idx-cell.done .n,.idx-cell.done .cc{color:var(--paper-2)}
+.idx-cell .chk{position:absolute;top:3px;right:3px;width:12px;height:12px}
+
+.toast{position:fixed;left:50%;bottom:28px;transform:translateX(-50%) translateY(20px);background:var(--ink);color:var(--paper-2);padding:12px 20px;border-radius:99px;font-family:"Fraunces";font-size:14px;z-index:60;opacity:0;transition:.3s;box-shadow:0 10px 30px -8px rgba(0,0,0,.4);pointer-events:none}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+footer{text-align:center;margin-top:30px;font-family:"Fraunces";font-style:italic;font-size:13px;color:var(--ink-3)}
+footer .cn{font-family:"Ma Shan Zheng";font-style:normal;font-size:18px;color:var(--gold);display:block;margin-bottom:4px}
+
+.toggle-row{display:flex;align-items:center;justify-content:space-between;gap:10px;background:var(--card);border:1px solid var(--line);border-radius:13px;padding:13px 15px;margin-bottom:8px}
+.toggle-row .tl{font-family:"Fraunces";font-size:14px;color:var(--ink);font-weight:500}
+.toggle-row .ts{font-size:12.5px;color:var(--ink-3);margin-top:2px}
+.switch{position:relative;width:48px;height:27px;flex-shrink:0;cursor:pointer}
+.switch input{opacity:0;width:0;height:0}
+.slider{position:absolute;inset:0;background:var(--line);border-radius:99px;transition:.25s}
+.slider::before{content:"";position:absolute;width:21px;height:21px;left:3px;top:3px;background:var(--paper-2);border-radius:50%;transition:.25s}
+.switch input:checked+.slider{background:var(--red)}
+.switch input:checked+.slider::before{transform:translateX(21px)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <p class="kicker">Cina in 50 Giorni</p>
+    <h1 class="cn-title">五十天学中文</h1>
+    <p class="sub">Cinese da sopravvivenza per viaggiatori — una lezione al giorno</p>
+    <div class="rule"></div>
+  </header>
+
+  <div class="bar">
+    <div class="prog-wrap">
+      <div class="prog-meta"><span><b id="pCount">0</b> di 50 imparate</span><span id="pPct">0%</span></div>
+      <div class="prog-track"><div class="prog-fill" id="pFill"></div></div>
+    </div>
+    <div class="streak">
+      <span class="num" id="streakNum">0</span>
+      <span class="lbl">giorni</span>
+    </div>
+    <div class="menu-btn" id="menuBtn" title="Menù">
+      <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><line x1="4" y1="7" x2="20" y2="7"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="17" x2="20" y2="17"/></svg>
+    </div>
+  </div>
+
+  <div class="nav">
+    <button class="nav-arrow" id="prevBtn" aria-label="Precedente"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg></button>
+    <div class="nav-center"><button class="today-btn" id="todayBtn">↻ Vai a oggi</button></div>
+    <button class="nav-arrow" id="nextBtn" aria-label="Successivo"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></button>
+  </div>
+
+  <div id="cardHost"></div>
+
+  <footer>
+    <span class="cn">一路平安</span>
+    Yílù píng'ān — "Buon viaggio". Costruito per te, condividilo con chi vuoi.
+  </footer>
+</div>
+
+<div class="scrim" id="scrim"></div>
+<div class="panel" id="panel">
+  <div class="panel-grab"></div>
+  <div class="panel-inner">
+
+    <h3><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="var(--red)" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>Impostazioni & promemoria</h3>
+
+    <div class="toggle-row">
+      <div><div class="tl">Modalità ripasso</div><div class="ts">Nasconde pinyin e traduzione: tocca per svelare</div></div>
+      <label class="switch"><input type="checkbox" id="revToggle"><span class="slider"></span></label>
+    </div>
+
+    <div class="field">
+      <label>Giorno 1 del corso (parti da qui)</label>
+      <input type="date" id="startDate">
+    </div>
+    <div class="field">
+      <label>Ora del promemoria giornaliero</label>
+      <select id="remTime">
+        <option value="7">07:00</option>
+        <option value="8" selected>08:00</option>
+        <option value="9">09:00</option>
+        <option value="12">12:00 (pranzo)</option>
+        <option value="13">13:00</option>
+        <option value="19">19:00</option>
+        <option value="21">21:00 (sera)</option>
+      </select>
+    </div>
+    <button class="btn-ics" id="icsBtn">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+      Scarica i 50 promemoria (calendario)
+    </button>
+    <p class="hint">Scarica il file e aprilo: aggiunge 50 appuntamenti (uno al giorno) al tuo calendario del telefono, ognuno con la lezione dentro. È il tuo promemoria automatico — il telefono ti avvisa da solo ogni mattina.</p>
+
+    <h3><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="var(--red)" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>Tutte le 50 lezioni</h3>
+    <div class="idx" id="idxGrid"></div>
+
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+/* ============ CURRICULUM ============ */
+const L=[
+{d:1,c:"Fondamenta",h:"你好",p:"nǐ hǎo",m:"Ciao / Salve",lit:"lett. \u201Ctu — bene\u201D",t:"Si dice <b>NI-HAO</b>. Immagina di salutare piegando il <b>ginocchio</b> (knee \u2192 nǐ) e chiedendo <b>\u201Ccome?\u201D</b> (how \u2192 hǎo): saluti chiedendo come va.",eh:"你好！",ep:"Nǐ hǎo!",em:"Ciao!",n:"Il cinese ha <b>4 toni</b>: 1\u00B0 piatto e alto (ā), 2\u00B0 che sale come una domanda (á), 3\u00B0 che scende e poi risale (ǎ), 4\u00B0 che scende secco come un ordine (à). Stesso suono + tono diverso = parola diversa. Non andare nel panico: col contesto ti capiscono lo stesso."},
+{d:2,c:"Fondamenta",h:"谢谢",p:"xièxie",m:"Grazie",t:"Si pronuncia <b>SIÈ-SIÈ</b>. Quando ringrazi due volte fai \u201Cshh-shh\u201D, come per <b>zittire</b> l\u2019imbarazzo di tanta gratitudine.",eh:"谢谢你！",ep:"Xièxie nǐ!",em:"Grazie a te!"},
+{d:3,c:"Fondamenta",h:"不客气",p:"bú kèqi",m:"Prego / Di niente",lit:"lett. \u201Cnon fare complimenti\u201D",t:"<b>BU-KE-CI</b>: \u201Cnon c\u2019\u00E8 (bu) di che (ke), ci (qi) mancherebbe!\u201D. La risposta perfetta a un grazie.",eh:"—谢谢！—不客气。",ep:"—Xièxie! —Bú kèqi.",em:"—Grazie! —Prego."},
+{d:4,c:"Fondamenta",h:"对不起",p:"duìbuqǐ",m:"Scusa / Mi dispiace",t:"<b>DUI-BU-CI</b>: quando sbagli ti senti \u201Cdoppiamente (DUI=due) in difetto\u201D \u2014 chiedi scusa: duìbuqǐ.",eh:"对不起！",ep:"Duìbuqǐ!",em:"Scusa!"},
+{d:5,c:"Fondamenta",h:"请问",p:"qǐngwèn",m:"Scusi, posso chiedere…?",lit:"per fermare qualcuno con educazione",t:"<b>CING-UÈN</b>: prima di ogni domanda metti questo \u2014 \u201Cper favore (qǐng) ti <b>chiedo</b> (wèn)\u201D. \u00C8 il tuo \u201Cmi scusi\u201D di apertura.",eh:"请问，厕所在哪儿？",ep:"Qǐngwèn, cèsuǒ zài nǎr?",em:"Scusi, dov\u2019\u00E8 il bagno?"},
+{d:6,c:"Fondamenta",h:"一 二 三 四 五",p:"yī èr sān sì wǔ",m:"1 · 2 · 3 · 4 · 5",t:"<b>YI</b>(1) \u201Cl\u2019unico\u201D · <b>ÈR</b>(2) la coppia di orecchie · <b>SAN</b>(3) guarda i tre tratti del carattere 三 · <b>SÌ</b>(4) \u201Csì-sì-sì-sì\u201D quattro volte · <b>WU</b>(5) la mano aperta, 5 dita.",eh:"一，二，三！",ep:"Yī, èr, sān!",em:"Uno, due, tre!"},
+{d:7,c:"Fondamenta",h:"六 七 八 九 十",p:"liù qī bā jiǔ shí",m:"6 · 7 · 8 · 9 · 10",t:"<b>LIU</b>(6) · <b>QI</b>(7) \u201Cchi è il sette?\u201D · <b>BA</b>(8) come una risata \u201Cbah!\u201D · <b>JIU</b>(9) \u201Cgiù il nove\u201D · <b>SHÌ</b>(10) \u201Csì, decina piena\u201D.",eh:"十！",ep:"Shí!",em:"Dieci!",n:"<b>Trucco da turista:</b> i cinesi mostrano i numeri con <b>una mano sola</b>, anche dal 6 al 10, con gesti precisi. Quando contratti, guarda le loro dita: spesso \u201Cdicono\u201D il prezzo col gesto."},
+{d:8,c:"Sopravvivenza",h:"多少钱",p:"duōshao qián",m:"Quanto costa?",t:"<b>DUO-SHAO-CIÈN</b>: per il prezzo chiedi dei \u201CCHIÈN\u201D (qián = soldi). Immagina il venditore che fa il \u201Cduo\u201D con la calcolatrice prima di dirti i chién.",eh:"这个多少钱？",ep:"Zhège duōshao qián?",em:"Quanto costa questo?"},
+{d:9,c:"Sopravvivenza",h:"太贵了 · 便宜一点",p:"tài guì le · piányi yìdiǎn",m:"Troppo caro! · Un po\u2019 più economico",t:"<b>TAI-GUI</b> = \u201Cche <b>guaio</b> di prezzo!\u201D. <b>PIANYI</b> suona come \u201Cpiano-piano\u201D, cose facili = a buon mercato: piányi.",eh:"太贵了！便宜一点。",ep:"Tài guì le! Piányi yìdiǎn.",em:"Troppo caro! Più economico."},
+{d:10,c:"Sopravvivenza",h:"我要这个",p:"wǒ yào zhège",m:"Voglio questo",t:"<b>WO-YAO-ZHE-GE</b>: \u201CIo (wǒ) <b>voglio</b> (yào)\u201D \u2014 yào come un \u201Cmiao\u201D deciso del gatto che pretende. zhège = \u201Cquesto\u201D.",eh:"我要这个。",ep:"Wǒ yào zhège.",em:"Voglio questo."},
+{d:11,c:"Sopravvivenza",h:"这个 · 那个",p:"zhège · nàge",m:"Questo · Quello",t:"<b>ZHE</b> = qui, vicino (questo). <b>NA</b> = là, lontano (quello) \u2014 come l\u2019italiano \u201Cna cosa là\u201D. Punta il dito e dillo: funziona sempre.",eh:"不是这个，那个。",ep:"Bú shì zhège, nàge.",em:"Non questo, quello."},
+{d:12,c:"Sopravvivenza",h:"在哪儿",p:"zài nǎr",m:"Dov\u2019\u00E8…?",t:"<b>ZAI-NAR</b>: per cercare qualcosa chiedi \u201Csta (zài) <b>dove</b>?\u201D. Nǎr suona come \u201Cna-re?\u201D \u2192 \u201Cdov\u2019\u00E8, eh?\u201D. Metti la cosa prima: [cosa] zài nǎr?",eh:"火车站在哪儿？",ep:"Huǒchēzhàn zài nǎr?",em:"Dov\u2019\u00E8 la stazione dei treni?"},
+{d:13,c:"Sopravvivenza",h:"厕所在哪儿",p:"cèsuǒ zài nǎr",m:"Dov\u2019\u00E8 il bagno?",t:"<b>CÈ-SUO</b>: quando scappa, \u201CTSE-SUO\u201D \u00E8 quasi uno starnuto trattenuto mentre corri al WC. La frase che salva la giornata.",eh:"请问厕所在哪儿？",ep:"Qǐngwèn cèsuǒ zài nǎr?",em:"Scusi, dov\u2019\u00E8 il bagno?"},
+{d:14,c:"Sopravvivenza",h:"我听不懂",p:"wǒ tīng bu dǒng",m:"Non capisco",lit:"lett. \u201Cio ascolto ma non capisco\u201D",t:"<b>TING-BU-DONG</b>: \u201Csento (ting) ma non (bu) capisco un <b>DONG</b>\u201D \u2014 come una campana DONG che senti ma non ti spiega nulla.",eh:"对不起，我听不懂。",ep:"Duìbuqǐ, wǒ tīng bu dǒng.",em:"Scusa, non capisco."},
+{d:15,c:"Sopravvivenza",h:"你会说英语吗",p:"nǐ huì shuō Yīngyǔ ma",m:"Parli inglese?",t:"<b>YING-YU</b> = \u201Cinglese\u201D. \u201Chuì shuō\u201D = \u201Csai dire\u201D. La particella finale <b>ma</b> trasforma tutto in domanda: \u00E8 un punto interrogativo parlato.",eh:"你会说英语吗？",ep:"Nǐ huì shuō Yīngyǔ ma?",em:"Parli inglese?",n:"<b>吗 (ma)</b> alla fine di una frase = la rende una domanda sì/no. \u201CHai acqua\u201D + ma \u2192 \u201CHai acqua?\u201D. Comodissimo: dici un\u2019affermazione e aggiungi <b>ma</b>."},
+{d:16,c:"A tavola",h:"我饿了 · 我渴了",p:"wǒ è le · wǒ kě le",m:"Ho fame · Ho sete",t:"<b>È-LE</b>: hai fame e fai \u201CEH!\u201D con la pancia vuota. <b>KĚ</b> suona come \u201Cche sete!\u201D \u2192 wǒ kě le.",eh:"我饿了！",ep:"Wǒ è le!",em:"Ho fame!"},
+{d:17,c:"A tavola",h:"菜单",p:"càidān",m:"Il menù",t:"<b>CAI-DAN</b>: \u201Cche c\u2019\u00E8? <b>Dammi</b> (dān) il menù!\u201D. càidān = la lista dei piatti.",eh:"菜单，谢谢。",ep:"Càidān, xièxie.",em:"Il menù, grazie."},
+{d:18,c:"A tavola",h:"水 · 茶 · 啤酒",p:"shuǐ · chá · píjiǔ",m:"Acqua · Tè · Birra",t:"<b>SHUI</b> = acqua (il \u201Cshhh-wii\u201D dell\u2019acqua che scorre). <b>CHÁ</b> = tè (uguale al nostro \u201Cchai\u201D!). <b>PI-JIU</b> = birra: \u201Cmi pijo una birra giù\u201D.",eh:"一个啤酒，谢谢。",ep:"Yí gè píjiǔ, xièxie.",em:"Una birra, grazie."},
+{d:19,c:"A tavola",h:"不要辣 · 微辣",p:"bú yào là · wēi là",m:"Non piccante · Poco piccante",t:"<b>LÀ</b> = piccante: immagina la bocca che fa \u201CLAAA\u201D mentre brucia. \u201Cbú yào là\u201D = \u201Cnon voglio piccante\u201D. In Cina serve davvero.",eh:"我不要辣。",ep:"Wǒ bú yào là.",em:"Non lo voglio piccante."},
+{d:20,c:"A tavola",h:"买单",p:"mǎidān",m:"Il conto, per favore",t:"<b>MAI-DAN</b>: \u201Cmai più, basta \u2014 fuori il <b>danaro</b>!\u201D. Alzi la mano e dici mǎidān: arriva il conto.",eh:"买单！",ep:"Mǎidān!",em:"Il conto!"},
+{d:21,c:"A tavola",h:"好吃",p:"hǎochī",m:"Buono / Delizioso",t:"<b>HAO-CHI</b>: \u201Cche roba buona, <b>chi</b> se la perde?\u201D. hǎo (buono) + chī (mangiare) = buono da mangiare. Aggiungi \u201Chěn\u201D (molto) davanti.",eh:"很好吃！",ep:"Hěn hǎochī!",em:"Molto buono!"},
+{d:22,c:"A tavola",h:"我吃素",p:"wǒ chī sù",m:"Sono vegetariano",lit:"lett. \u201Cio mangio di magro\u201D",t:"<b>CHI-SU</b>: \u201C<b>chi</b> mangia su\u2026 le verdure\u201D. chī = mangiare, sù = vegetariano. Tienila pronta: la carne spunta ovunque.",eh:"我吃素。",ep:"Wǒ chī sù.",em:"Sono vegetariano."},
+{d:23,c:"A tavola",h:"米饭 · 面条",p:"mǐfàn · miàntiáo",m:"Riso · Noodles",t:"<b>MI-FAN</b> = riso (\u201Cmi fanno il riso\u201D). <b>MIAN-TIAO</b> = noodles (\u201Cmi andrebbe un bel piatto di pasta lunga\u201D). Le due basi di ogni pasto.",eh:"米饭，谢谢。",ep:"Mǐfàn, xièxie.",em:"Riso, grazie."},
+{d:24,c:"In viaggio",h:"我要去",p:"wǒ yào qù",m:"Voglio andare a…",t:"<b>WO-YAO-CIÙ</b>: \u201CIo (wǒ) <b>voglio</b> (yào) andar ciù\u201D \u2014 qù = andare. Aggiungi la meta subito dopo. Al taxi è oro.",eh:"我要去机场。",ep:"Wǒ yào qù jīchǎng.",em:"Voglio andare all\u2019aeroporto."},
+{d:25,c:"In viaggio",h:"在这里停",p:"zài zhèlǐ tíng",m:"Si fermi qui",t:"<b>TING</b> = fermare (come il \u201Ctin!\u201D del campanello del bus). \u201Czài zhèlǐ\u201D = \u201Cqui\u201D. Al taxi: zài zhèlǐ tíng.",eh:"在这里停。",ep:"Zài zhèlǐ tíng.",em:"Si fermi qui."},
+{d:26,c:"In viaggio",h:"机场 · 火车站 · 酒店",p:"jīchǎng · huǒchēzhàn · jiǔdiàn",m:"Aeroporto · Stazione · Hotel",t:"<b>JI-CHANG</b> aeroporto (campo di volo). <b>HUO-CHE-ZHAN</b> = \u201Cfuoco-carro-stazione\u201D: il treno \u00E8 il carro di fuoco! <b>JIU-DIAN</b> = hotel.",eh:"我要去酒店。",ep:"Wǒ yào qù jiǔdiàn.",em:"Voglio andare in hotel."},
+{d:27,c:"In viaggio",h:"左 · 右 · 一直走",p:"zuǒ · yòu · yìzhí zǒu",m:"Sinistra · Destra · Dritto",t:"<b>ZUO</b> = sinistra. <b>YOU</b> = destra (suona come l\u2019inglese \u201Cyou\u201D: punti tu, a destra). <b>YIZHI ZOU</b> = \u201Cvai sempre dritto\u201D.",eh:"一直走，然后左。",ep:"Yìzhí zǒu, ránhòu zuǒ.",em:"Dritto, poi a sinistra."},
+{d:28,c:"In viaggio",h:"多远 · 多久",p:"duō yuǎn · duō jiǔ",m:"Quanto è lontano? · Quanto tempo?",t:"<b>DUO</b> = quanto. <b>YUAN</b> = lontano. <b>JIU</b> = a lungo (durata). duō yuǎn? = quanto lontano. duō jiǔ? = quanto a lungo.",eh:"多远？",ep:"Duō yuǎn?",em:"Quanto è lontano?"},
+{d:29,c:"In viaggio",h:"地铁 · 公交车",p:"dìtiě · gōngjiāochē",m:"Metro · Autobus",t:"<b>DI-TIE</b> = metro: \u201Cdietro-terra\u201D, sotto terra! <b>GONG-JIAO-CHE</b> = autobus: \u201Cgong, sale gente sul carro\u201D.",eh:"地铁站在哪儿？",ep:"Dìtiězhàn zài nǎr?",em:"Dov\u2019\u00E8 la metro?"},
+{d:30,c:"In viaggio",h:"票",p:"piào",m:"Biglietto",t:"<b>PIAO</b>: il biglietto fa \u201Cpiao!\u201D quando lo timbri o esce dalla macchinetta. Una sola sillaba, facile da gridare allo sportello.",eh:"一张票。",ep:"Yì zhāng piào.",em:"Un biglietto."},
+{d:31,c:"In hotel",h:"我预订了",p:"wǒ yùdìng le",m:"Ho una prenotazione",t:"<b>YU-DING</b>: \u201Cio ho fatto <b>ding</b> \u2014 prenotazione confermata, ding!\u201D. Alla reception, prima cosa da dire.",eh:"我预订了。",ep:"Wǒ yùdìng le.",em:"Ho prenotato."},
+{d:32,c:"In hotel",h:"房间",p:"fángjiān",m:"La camera",t:"<b>FANG-JIAN</b>: pensa a \u201Cfan\u201D + un posto chiuso \u2014 la stanza dove dormi. fáng = stanza, jiān = spazio.",eh:"我的房间在哪儿？",ep:"Wǒ de fángjiān zài nǎr?",em:"Dov\u2019\u00E8 la mia camera?"},
+{d:33,c:"In hotel",h:"WiFi 密码",p:"WiFi mìmǎ",m:"La password del WiFi",t:"<b>MI-MA</b> = password: \u201Cmi mandi la madre di tutte le password?\u201D. mì = segreto, mǎ = codice. La prima domanda di ogni nomade.",eh:"WiFi密码是什么？",ep:"WiFi mìmǎ shì shénme?",em:"Qual è la password del WiFi?"},
+{d:34,c:"In hotel",h:"几点",p:"jǐ diǎn",m:"A che ora?",t:"<b>JI-DIAN</b>: \u201Ca <b>che</b> (jǐ) punto (diǎn) dell\u2019orologio?\u201D. Utile per check-out, treni, colazione. Rispondono con i numeri (lez. 6\u20137).",eh:"几点退房？",ep:"Jǐ diǎn tuìfáng?",em:"A che ora il check-out?"},
+{d:35,c:"Soldi & shopping",h:"可以用支付宝吗",p:"kěyǐ yòng Zhīfùbǎo ma",m:"Posso pagare con Alipay?",t:"<b>kěyǐ … ma?</b> = \u201Cposso\u2026?\u201D, la struttura per chiedere permesso. <b>Zhīfùbǎo</b> = Alipay. (Per WeChat Pay: 微信 wēixìn.)",eh:"可以用支付宝吗？",ep:"Kěyǐ yòng Zhīfùbǎo ma?",em:"Posso pagare con Alipay?",n:"<b>Fondamentale:</b> in Cina il contante \u00E8 quasi sparito \u2014 si paga tutto col telefono via <b>QR code</b> (Alipay / WeChat Pay). Collega una carta internazionale all\u2019app <b>prima</b> di partire: senza, fai una fatica enorme."},
+{d:36,c:"Soldi & shopping",h:"现金",p:"xiànjīn",m:"Contanti",t:"<b>XIAN-JIN</b>: \u201Cscendi il gin(occhio) e tira fuori i contanti\u201D. xiànjīn = soldi in mano, sempre più rari ma utili da nominare.",eh:"可以用现金吗？",ep:"Kěyǐ yòng xiànjīn ma?",em:"Posso pagare in contanti?"},
+{d:37,c:"Soldi & shopping",h:"有没有",p:"yǒu méiyǒu",m:"Avete…? / C\u2019\u00E8…?",t:"<b>YOU-MEI-YOU</b> = \u201Cce-n\u2019\u00E8 / non-ce-n\u2019\u00E8?\u201D. \u00C8 il modo cinese di chiedere s\u00EC/no: dici la cosa + \u201Cyǒu méiyǒu\u201D.",eh:"有没有水？",ep:"Yǒu méiyǒu shuǐ?",em:"C\u2019\u00E8 dell\u2019acqua?"},
+{d:38,c:"Soldi & shopping",h:"大一点 · 小一点",p:"dà yìdiǎn · xiǎo yìdiǎn",m:"Più grande · Più piccolo",t:"<b>DA</b> = grande (\u201Cda grande!\u201D). <b>XIAO</b> = piccolo (suona \u201Csciao\u201D, piccino). yìdiǎn = \u201Cun pochino\u201D. Per taglie e porzioni.",eh:"大一点，谢谢。",ep:"Dà yìdiǎn, xièxie.",em:"Più grande, grazie."},
+{d:39,c:"Soldi & shopping",h:"袋子",p:"dàizi",m:"Un sacchetto",t:"<b>DAI-ZI</b>: \u201C<b>dammi</b> (dài) il sacchetto (zi)\u201D. dàizi = busta. Spesso si paga, quindi chiedila apposta.",eh:"要一个袋子。",ep:"Yào yí gè dàizi.",em:"Vorrei un sacchetto."},
+{d:40,c:"Sociale & SOS",h:"我叫…",p:"wǒ jiào…",m:"Mi chiamo…",t:"<b>WO-JIAO</b>: \u201CIo (wǒ) mi <b>chiamo</b> (jiào)\u201D \u2014 jiào suona quasi come \u201Cchiamo\u201D! Aggiungi il tuo nome dopo.",eh:"我叫Lucas。",ep:"Wǒ jiào Lucas.",em:"Mi chiamo Lucas."},
+{d:41,c:"Sociale & SOS",h:"很高兴认识你",p:"hěn gāoxìng rènshi nǐ",m:"Piacere di conoscerti",t:"<b>GAO-XING</b> = felice (\u201Cche scintilla di gioia\u201D). \u201Crènshi nǐ\u201D = conoscerti. Tutto insieme: \u201Cmolto felice di conoscerti\u201D.",eh:"很高兴认识你！",ep:"Hěn gāoxìng rènshi nǐ!",em:"Piacere di conoscerti!"},
+{d:42,c:"Sociale & SOS",h:"我是意大利人",p:"wǒ shì Yìdàlì rén",m:"Sono italiano",t:"<b>YI-DA-LI</b> = Italia (quasi identico!). <b>rén</b> = persona. \u201Cwǒ shì Yìdàlì rén\u201D = \u201Cio sono persona d\u2019Italia\u201D. Apre sempre un sorriso.",eh:"我是意大利人。",ep:"Wǒ shì Yìdàlì rén.",em:"Sono italiano."},
+{d:43,c:"Sociale & SOS",h:"救命",p:"jiùmìng",m:"Aiuto!",lit:"da urlare in emergenza",t:"<b>JIU-MING</b>: se nessuno ti salva vai \u201Cgiù\u201D (jiù) \u2014 gridi \u201Cjiùmìng!\u201D per salvare la vita (mìng = vita). Speriamo non serva mai.",eh:"救命！",ep:"Jiùmìng!",em:"Aiuto!"},
+{d:44,c:"Sociale & SOS",h:"我需要医生",p:"wǒ xūyào yīshēng",m:"Ho bisogno di un medico",t:"<b>YI-SHENG</b> = medico. <b>xūyào</b> = aver bisogno. Per la polizia: 警察 <b>jǐngchá</b>.",eh:"我需要医生。",ep:"Wǒ xūyào yīshēng.",em:"Mi serve un medico.",n:"<b>Numeri d\u2019emergenza in Cina:</b> Polizia <b>110</b>, Ambulanza <b>120</b>, Pompieri <b>119</b>. Salvali nel telefono prima di partire."},
+{d:45,c:"Sociale & SOS",h:"我不舒服",p:"wǒ bù shūfu",m:"Non mi sento bene / Sto male",t:"<b>SHU-FU</b> = stare comodi, a proprio agio. \u201Cbù shūfu\u201D = NON a proprio agio = sto male. Pensa: \u201Cnon sono in su, sono fuori forma\u201D.",eh:"我不舒服。",ep:"Wǒ bù shūfu.",em:"Sto male."},
+{d:46,c:"Sociale & SOS",h:"药店",p:"yàodiàn",m:"La farmacia",t:"<b>YAO-DIAN</b>: \u201Cyào\u201D (medicina, il \u201Cmiao\u201D di sollievo) + \u201Cdiàn\u201D (negozio) = il negozio delle medicine.",eh:"药店在哪儿？",ep:"Yàodiàn zài nǎr?",em:"Dov\u2019\u00E8 la farmacia?"},
+{d:47,c:"Extra & ripasso",h:"漂亮",p:"piàoliang",m:"Bello / Bella",t:"<b>PIAO-LIANG</b>: \u201Cche piacere, che luce!\u201D. Vale per cose, persone, paesaggi. Un complimento che apre tutte le porte.",eh:"很漂亮！",ep:"Hěn piàoliang!",em:"Molto bello!"},
+{d:48,c:"Extra & ripasso",h:"可以拍照吗",p:"kěyǐ pāizhào ma",m:"Posso fare una foto?",t:"<b>PAI-ZHAO</b> = scattare foto (\u201Cpigio e zac, foto!\u201D). \u201Ckěyǐ \u2026 ma?\u201D = chiedere permesso (lez. 35). Educato e utilissimo.",eh:"可以拍照吗？",ep:"Kěyǐ pāizhào ma?",em:"Posso fare una foto?"},
+{d:49,c:"Extra & ripasso",h:"这是什么",p:"zhè shì shénme",m:"Cos\u2019\u00E8 questo?",t:"<b>SHEN-ME</b> = che cosa (\u201Cscena, cos\u2019\u00E8?\u201D). \u201Czhè shì shénme\u201D = \u201Cquesto \u00E8 che cosa?\u201D. Perfetta davanti a cibi misteriosi al mercato.",eh:"这是什么？",ep:"Zhè shì shénme?",em:"Cos\u2019\u00E8 questo?"},
+{d:50,c:"Extra & ripasso",h:"老板，便宜一点！",p:"Lǎobǎn, piányi yìdiǎn!",m:"Capo, fammi un prezzo!",lit:"la frase-jolly del contrattatore",t:"<b>LAOBAN</b> = \u201Ccapo / titolare\u201D: chiamare cos\u00EC il venditore \u00E8 simpatico e apre alla trattativa. Hai unito le lez. 8 + 9 + 11: ora contratti come un local. <b>Ce l\u2019hai fatta.</b>",eh:"老板，这个多少钱？太贵了！",ep:"Lǎobǎn, zhège duōshao qián? Tài guì le!",em:"Capo, quanto costa? Troppo caro!",n:"<b>Congratulazioni \uD83C\uDF89</b> 50 giorni, circa 70 frasi. Con queste te la cavi nell\u201980% delle situazioni da turista in Cina. Adesso vai e usale: gli errori sono parte del gioco, e i cinesi apprezzano tantissimo chi ci prova. \u4E00\u8DEF\u5E73\u5B89!"}
+];
+
+/* ============ STATE ============ */
+const KEY="cina50:v1";
+const mem={};
+const Store={
+  async get(k){try{if(window.storage){const r=await window.storage.get(k,false);return r?r.value:(mem[k]??null);}}catch(e){}return mem[k]??null;},
+  async set(k,v){mem[k]=v;try{if(window.storage){await window.storage.set(k,v,false);}}catch(e){}}
+};
+let state={startDate:null,completed:[],doneDates:[]};
+let selectedDay=1;
+let revealMode=false;
+let revealed=false;
+
+function todayStr(){const d=new Date();return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0");}
+function parseLocal(s){const[y,m,d]=s.split("-").map(Number);return new Date(y,m-1,d);}
+function daysBetween(a,b){return Math.round((parseLocal(b)-parseLocal(a))/86400000);}
+
+function currentDay(){
+  if(!state.startDate)return 1;
+  const diff=daysBetween(state.startDate,todayStr());
+  return Math.min(50,Math.max(1,diff+1));
+}
+
+function computeStreak(){
+  if(!state.doneDates.length)return 0;
+  const set=new Set(state.doneDates);
+  let streak=0;
+  let cur=parseLocal(todayStr());
+  // allow streak to count if today done, else start from yesterday
+  if(!set.has(todayStr())){cur.setDate(cur.getDate()-1);}
+  while(true){
+    const s=cur.getFullYear()+"-"+String(cur.getMonth()+1).padStart(2,"0")+"-"+String(cur.getDate()).padStart(2,"0");
+    if(set.has(s)){streak++;cur.setDate(cur.getDate()-1);}else break;
+  }
+  return streak;
+}
+
+/* ============ TTS ============ */
+let zhVoice=null;
+function pickVoice(){
+  try{
+    const vs=speechSynthesis.getVoices();
+    zhVoice=vs.find(v=>/zh[-_]CN/i.test(v.lang))||vs.find(v=>/^zh/i.test(v.lang))||null;
+  }catch(e){}
+}
+if("speechSynthesis" in window){pickVoice();speechSynthesis.onvoiceschanged=pickVoice;}
+function speak(text,btn){
+  if(!("speechSynthesis" in window)){toast("Audio non disponibile su questo dispositivo");return;}
+  try{
+    speechSynthesis.cancel();
+    const u=new SpeechSynthesisUtterance(text.replace(/[，。！？·\s]+/g," ").trim());
+    u.lang="zh-CN";u.rate=.8;u.pitch=1;
+    if(zhVoice)u.voice=zhVoice;
+    if(btn){btn.classList.add("playing");u.onend=u.onerror=()=>btn.classList.remove("playing");}
+    speechSynthesis.speak(u);
+    if(!zhVoice){setTimeout(()=>{if(!speechSynthesis.speaking)toast("Manca la voce cinese: prova ad attivarla nelle impostazioni del telefono");},400);}
+  }catch(e){toast("Audio non disponibile");}
+}
+
+/* ============ RENDER ============ */
+function hanziSize(s){const len=s.replace(/[，。！？·\s]/g,"").length;if(len<=2)return 72;if(len<=4)return 56;if(len<=6)return 42;return 34;}
+
+function renderCard(){
+  const l=L[selectedDay-1];
+  const isDone=state.completed.includes(l.d);
+  const isToday=selectedDay===currentDay();
+  revealed=false;
+  const blurClass=revealMode?"blurred":"";
+  const host=document.getElementById("cardHost");
+  host.innerHTML=`
+    <div class="card" id="theCard">
+      <div class="card-top">
+        <div>
+          <div class="cat">${l.c}</div>
+          ${isDone?`<div class="done-tag"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Imparata</div>`:isToday?`<div class="done-tag" style="color:var(--red)">★ Lezione di oggi</div>`:``}
+        </div>
+        <div class="seal"><span class="s-cn">第</span><span class="s-n">${l.d}</span></div>
+      </div>
+
+      <div class="hanzi" id="heroHanzi" style="font-size:${hanziSize(l.h)}px">${l.h}</div>
+      <div class="pinyin ${blurClass}" data-rv>${l.p}</div>
+      <div class="meaning ${blurClass}" data-rv>${l.m}${l.lit?`<span class="lit">${l.lit}</span>`:``}</div>
+
+      <div class="say">
+        <button class="say-btn" id="sayMain"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/></svg>Ascolta la pronuncia</button>
+      </div>
+      ${revealMode?`<div class="reveal-hint" id="revHint">Tocca la carta per svelare →</div>`:``}
+
+      <div class="divider"><span class="l"></span><span class="d">诀</span><span class="l"></span></div>
+
+      <div class="trick">
+        <div class="trick-h"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h6"/><path d="M10 22h4"/><path d="M12 2a7 7 0 0 0-4 12.7c.5.4.8 1 .9 1.6h6.2c.1-.6.4-1.2.9-1.6A7 7 0 0 0 12 2z"/></svg>Il trucco per ricordarla</div>
+        <p>${l.t}</p>
+      </div>
+
+      <div class="ex">
+        <div class="ex-h">Esempio
+          <button class="mini-say" id="sayEx"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/></svg></button>
+        </div>
+        <div class="ex-cn" id="exHanzi">${l.eh}</div>
+        <div class="ex-py">${l.ep}</div>
+        <div class="ex-it">${l.em}</div>
+      </div>
+
+      ${l.n?`<div class="note"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg><div>${l.n}</div></div>`:``}
+
+      <button class="complete ${isDone?"done":""}" id="completeBtn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+        ${isDone?"Imparata — ben fatto!":"Segna come imparata"}
+      </button>
+    </div>`;
+
+  document.getElementById("sayMain").onclick=e=>speak(l.h,e.currentTarget);
+  document.getElementById("sayEx").onclick=e=>speak(l.eh,e.currentTarget);
+  document.getElementById("heroHanzi").onclick=e=>speak(l.h);
+  document.getElementById("exHanzi").onclick=e=>speak(l.eh);
+  document.getElementById("completeBtn").onclick=()=>toggleComplete(l.d);
+
+  if(revealMode){
+    document.getElementById("theCard").addEventListener("click",function rv(ev){
+      if(ev.target.closest("button"))return;
+      if(!revealed){revealed=true;document.querySelectorAll("[data-rv]").forEach(el=>el.classList.remove("blurred"));const h=document.getElementById("revHint");if(h)h.style.display="none";}
+    });
+  }
+
+  document.getElementById("prevBtn").disabled=selectedDay<=1;
+  document.getElementById("nextBtn").disabled=selectedDay>=50;
+  refreshStats();
+}
+
+function refreshStats(){
+  const done=state.completed.length;
+  document.getElementById("pCount").textContent=done;
+  document.getElementById("pPct").textContent=Math.round(done/50*100)+"%";
+  document.getElementById("pFill").style.width=(done/50*100)+"%";
+  document.getElementById("streakNum").textContent=computeStreak();
+}
+
+function toggleComplete(day){
+  const i=state.completed.indexOf(day);
+  if(i>=0){state.completed.splice(i,1);}
+  else{
+    state.completed.push(day);
+    const t=todayStr();
+    if(!state.doneDates.includes(t))state.doneDates.push(t);
+    toast(day<50?"Bravo! Domani la prossima 💪":"Hai finito il corso! 一路平安 🎉");
+  }
+  save();renderCard();buildIndex();
+}
+
+/* ============ INDEX ============ */
+function buildIndex(){
+  const g=document.getElementById("idxGrid");
+  const cur=currentDay();
+  g.innerHTML=L.map(l=>{
+    const done=state.completed.includes(l.d);
+    const isCur=l.d===cur;
+    const firstChar=l.h.replace(/[，。！？·\s].*$/,"").slice(0,2);
+    return `<div class="idx-cell ${done?"done":""} ${isCur&&!done?"cur":""}" data-day="${l.d}">
+      ${done?`<svg class="chk" viewBox="0 0 24 24" fill="none" stroke="var(--paper-2)" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>`:``}
+      <span class="n">${l.d}</span><span class="cc">${firstChar}</span>
+    </div>`;
+  }).join("");
+  g.querySelectorAll(".idx-cell").forEach(c=>c.onclick=()=>{selectedDay=+c.dataset.day;renderCard();closePanel();});
+}
+
+/* ============ ICS CALENDAR ============ */
+function esc(s){return s.replace(/\\/g,"\\\\").replace(/;/g,"\\;").replace(/,/g,"\\,").replace(/\n/g,"\\n");}
+function stripTags(s){return s.replace(/<[^>]+>/g,"");}
+function pad(n){return String(n).padStart(2,"0");}
+function dtLocal(d,h,mi){return d.getFullYear()+pad(d.getMonth()+1)+pad(d.getDate())+"T"+pad(h)+pad(mi||0)+"00";}
+function dtStamp(){const d=new Date();return d.getUTCFullYear()+pad(d.getUTCMonth()+1)+pad(d.getUTCDate())+"T"+pad(d.getUTCHours())+pad(d.getUTCMinutes())+pad(d.getUTCSeconds())+"Z";}
+
+function buildICS(){
+  const start=state.startDate?parseLocal(state.startDate):new Date();
+  const hour=+document.getElementById("remTime").value;
+  let out=["BEGIN:VCALENDAR","VERSION:2.0","PRODID:-//Cina in 50 Giorni//IT","CALSCALE:GREGORIAN","METHOD:PUBLISH"];
+  L.forEach(l=>{
+    const d=new Date(start.getFullYear(),start.getMonth(),start.getDate()+(l.d-1));
+    const dEnd=new Date(d.getFullYear(),d.getMonth(),d.getDate());
+    const summary=esc("🇨🇳 Cinese Giorno "+l.d+": "+l.h+" ("+l.p+") — "+l.m);
+    const desc=esc(l.h+"  ·  "+l.p+"  ·  "+l.m+"\n\nTRUCCO: "+stripTags(l.t)+"\n\nESEMPIO: "+l.eh+" — "+l.ep+" — "+l.em+(l.n?"\n\nNOTA: "+stripTags(l.n):""));
+    out.push("BEGIN:VEVENT");
+    out.push("UID:cina50-day"+l.d+"@viaggio");
+    out.push("DTSTAMP:"+dtStamp());
+    out.push("DTSTART:"+dtLocal(d,hour,0));
+    out.push("DTEND:"+dtLocal(d,hour,30));
+    out.push("SUMMARY:"+summary);
+    out.push("DESCRIPTION:"+desc);
+    out.push("BEGIN:VALARM");
+    out.push("ACTION:DISPLAY");
+    out.push("DESCRIPTION:"+summary);
+    out.push("TRIGGER:PT0M");
+    out.push("END:VALARM");
+    out.push("END:VEVENT");
+  });
+  out.push("END:VCALENDAR");
+  return out.join("\r\n");
+}
+
+function downloadICS(){
+  try{
+    const blob=new Blob([buildICS()],{type:"text/calendar;charset=utf-8"});
+    const url=URL.createObjectURL(blob);
+    const a=document.createElement("a");
+    a.href=url;a.download="cinese-50-giorni-promemoria.ics";
+    document.body.appendChild(a);a.click();
+    setTimeout(()=>{document.body.removeChild(a);URL.revokeObjectURL(url);},200);
+    toast("File scaricato — aprilo per aggiungerlo al calendario");
+  }catch(e){toast("Download non riuscito su questo dispositivo");}
+}
+
+/* ============ PANEL & UI ============ */
+function openPanel(){document.getElementById("scrim").classList.add("open");document.getElementById("panel").classList.add("open");}
+function closePanel(){document.getElementById("scrim").classList.remove("open");document.getElementById("panel").classList.remove("open");}
+let toastT;
+function toast(msg){const t=document.getElementById("toast");t.textContent=msg;t.classList.add("show");clearTimeout(toastT);toastT=setTimeout(()=>t.classList.remove("show"),2600);}
+
+/* ============ PERSIST ============ */
+async function save(){await Store.set(KEY,JSON.stringify(state));}
+async function load(){
+  const raw=await Store.get(KEY);
+  if(raw){try{const s=JSON.parse(raw);state.startDate=s.startDate||null;state.completed=s.completed||[];state.doneDates=s.doneDates||[];}catch(e){}}
+  if(!state.startDate){state.startDate=todayStr();await save();}
+}
+
+/* ============ INIT ============ */
+(async function init(){
+  await load();
+  selectedDay=currentDay();
+  document.getElementById("startDate").value=state.startDate;
+  renderCard();
+  buildIndex();
+
+  document.getElementById("prevBtn").onclick=()=>{if(selectedDay>1){selectedDay--;renderCard();}};
+  document.getElementById("nextBtn").onclick=()=>{if(selectedDay<50){selectedDay++;renderCard();}};
+  document.getElementById("todayBtn").onclick=()=>{selectedDay=currentDay();renderCard();toast("Lezione di oggi: giorno "+selectedDay);};
+  document.getElementById("menuBtn").onclick=openPanel;
+  document.getElementById("scrim").onclick=closePanel;
+  document.getElementById("icsBtn").onclick=downloadICS;
+  document.getElementById("revToggle").onchange=e=>{revealMode=e.target.checked;renderCard();};
+  document.getElementById("startDate").onchange=async e=>{
+    if(e.target.value){state.startDate=e.target.value;await save();selectedDay=currentDay();renderCard();buildIndex();toast("Data aggiornata");}
+  };
+})();
+</script>
+</body>
+</html>
